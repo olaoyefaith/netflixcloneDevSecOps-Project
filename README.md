@@ -1,4 +1,4 @@
-# Project Documentation: Basic CI/CD Pipeline Setup using Jenkins, Git, Docker, SonarQube,Trivy  and Dependency Check
+# Basic CI/CD Pipeline Setup using Jenkins, Git, Docker, SonarQube,Trivy  and Dependency Check
 
 ## 1. Introduction
 
@@ -55,6 +55,9 @@ Visit the [Git download page](https://git-scm.com/downloads) and download the la
 1. **Run** the Git installer.
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
+
+
+![Alt text](images/plugginss.png)
 
 ## 5. Docker Installation
 
