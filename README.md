@@ -205,6 +205,7 @@ pipeline{
 - **Trigger** the pipeline manually or configure webhooks for automatic triggering on code commits.
 
 
+
 ![Alt text](images/buildandsuccess.png)
 
 
