@@ -39,7 +39,7 @@ Visit the [Jenkins download page](https://www.jenkins.io/download/) and download
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![Alt text](images/jenkinsinstallation.png)
+![Alt text](images/jenkinsinsallation.png)
 
 ### 3.3 Access Jenkins
 Open a web browser and navigate to `http://localhost:8080` to access the Jenkins dashboard. Follow the on-screen instructions to unlock Jenkins.
