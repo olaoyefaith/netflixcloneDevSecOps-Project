@@ -4,6 +4,7 @@ metadata:
   name: netflix-app
   labels:
     app: netflix-app
+  namespace: default  
 spec:
   type: NodePort
   ports:

@@ -4,6 +4,7 @@ metadata:
   name: netflix-app
   labels:
     app: netflix-app
+  namespace: default  
 spec:
   replicas: 2
   selector:
@@ -19,3 +20,22 @@ spec:
         image: olaoyefaith/netflix:latest
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
