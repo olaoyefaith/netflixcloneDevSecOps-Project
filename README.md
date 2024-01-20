@@ -1,9 +1,10 @@
-# Basic CI/CD Pipeline Setup using Jenkins, Git, Docker, SonarQube, Trivy, and Dependency Check
+
+# CI/CD Pipeline Setup with Jenkins, Git, Docker, SonarQube, Trivy, Dependency Check, Terraform for AKS, and ArgoCD
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-This document provides a comprehensive guide to set up a basic CI/CD pipeline using Jenkins, Git, Docker, SonarQube, Trivy, and Dependency Check. The pipeline aims to automate the building, testing, and deployment of software projects, ensuring continuous integration and delivery.
+This guide outlines the setup of a comprehensive CI/CD pipeline using Jenkins, Git, Docker, SonarQube, Trivy, Dependency Check, Terraform for AKS cluster provisioning, and ArgoCD for application deployment. It focuses on automating software project building, testing, AKS cluster creation, and application deployment, ensuring continuous integration and delivery.
 
 ### 1.2 Scope
 This guide is intended for software developers, DevOps engineers, and individuals involved in software development and deployment processes.
@@ -25,6 +26,9 @@ This guide is intended for software developers, DevOps engineers, and individual
 - [Docker](https://www.docker.com/)
 - [SonarQube](https://www.sonarqube.org/)
 - [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/)
+- [Terraform](https://www.terraform.io/)
+- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [ArgoCD](https://argoproj.github.io/argo-cd/)
 
 ### 2.2 Familiarity with Concepts
 Basic understanding of version control (Git), containerization (Docker), and continuous integration principles.
@@ -39,12 +43,12 @@ Visit the [Jenkins download page](https://www.jenkins.io/download/) and download
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![Alt text](images/jenkinsinsallation.png)
+![Jenkins Installation](images/jenkins_installation.png)
 
 ### 3.3 Access Jenkins
 Open a web browser and navigate to `http://localhost:8080` to access the Jenkins dashboard. Follow the on-screen instructions to unlock Jenkins.
 
-![Alt text](images/configure%20credentials.png)
+![Configure Credentials](images/configure_credentials.png)
 
 ## 4. Git Installation
 
@@ -56,21 +60,21 @@ Visit the [Git download page](https://git-scm.com/downloads) and download the la
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![Alt text](images/plugginss.png)
+![Git Plugins](images/git_plugins.png)
 
 ## 5. Docker Installation
 
 ### 5.1 Download Docker
 Visit the [Docker download page](https://www.docker.com/get-started) and download the latest version for your platform.
 
-![Alt text](images/dockerpluggins.png)
+![Docker Plugins](images/docker_plugins.png)
 
 ### 5.2 Installation Steps
 1. **Run** the Docker installer.
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![Alt text](images/docckerjenkins.png)
+![Docker Jenkins Integration](images/docker_jenkins_integration.png)
 
 ## 6. SonarQube Installation
 
@@ -82,26 +86,27 @@ Visit the [SonarQube download page](https://www.sonarqube.org/downloads/) and do
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![Alt text](images/sonarscanner.png)
+![SonarQube Scanner](images/sonar_scanner.png)
 
 ### 6.3 Start SonarQube
 Run SonarQube using Docker:
+
 ```bash
 docker run -d --name sonarqube -p 9000:9000 sonarqube
 ```
 
-![Alt text](images/sonar.png)
+![SonarQube Dashboard](images/sonar.png)
 
 Access SonarQube at `http://localhost:9000` and use default credentials (admin/admin).
 
-![Alt text](images/sonarQube%20(2).png)
+![SonarQube Dashboard](images/sonarqube_2.png)
 
 ## 7. Dependency Check Installation
 
 ### 7.1 Download Dependency Check
 Visit the [Dependency-Check GitHub releases page](https://github.com/jeremylong/DependencyCheck/releases) and download the latest version.
 
-![Alt text](images/dependencycheck.png)
+![Dependency Check](images/dependency_check.png)
 
 ### 7.2 Installation Steps
 1. **Extract** the Dependency Check archive.
@@ -175,10 +180,14 @@ pipeline {
                     }
                 }
             }
+
+
         }
         stage("TRIVY") {
             steps {
-                sh "trivy image olaoyefaith/netflix:latest > trivyimage.txt" 
+                sh "trivy image olaoyefaith/netflix:
+
+latest > trivyimage.txt" 
             }
         }
         stage('Deploy to container') {
@@ -195,16 +204,14 @@ pipeline {
 2. **Configure** the pipeline to fetch source code from the Git repository.
 3. **Define** pipeline stages (Build, Test, SonarQube Analysis, Docker Build, etc.).
 
-![Alt text](images/jenkinssucces.png)
+![Jenkins Success](images/jenkins_success.png)
 
-### 8.3
-
- Run the Pipeline
+### 8.3 Run the Pipeline
 - **Trigger** the pipeline manually or configure webhooks for automatic triggering on code commits.
 
-![Alt text](images/buildandsuccess.png)
-![Alt text](images/dockerhub.png)
-![Alt text](images/netflixsuccess.png)
+![Build and Success](images/build_and_success.png)
+![DockerHub](images/dockerhub.png)
+![Netflix Success](images/netflix_success.png)
 
 ## 9. Prometheus and Grafana Integration
 
@@ -217,7 +224,7 @@ Visit the [Prometheus download page](https://prometheus.io/download/) and downlo
 1. **Extract** the Prometheus archive to a directory of your choice.
 2. **Configure** the `prometheus.yml` file according to your monitoring requirements.
 
-### 9.1.2 systemd
+#### 9.1.2 systemd
 
 #### 9.1.2.1 Configure Prometheus
 
@@ -236,12 +243,6 @@ scrape_configs:
 #### 9.1.2.2 Create a systemd Service Unit
 
 Create a systemd service unit file for Prometheus:
-
-```bash
-sudo nano /etc/systemd/system/prometheus.service
-```
-
-Add the following content to the file:
 
 ```ini
 [Unit]
@@ -290,13 +291,11 @@ Now, Prometheus is running as a daemon process managed by systemd. You can check
 sudo systemctl status prometheus
 ```
 
-
 #### 9.1.3 Access Prometheus
 Open a web browser and navigate to `http://localhost:9090` to access the Prometheus dashboard.
 
-![Alt text](images/promethues.png)
-
-![Alt text](images/promethuestarget.png)
+![Prometheus Dashboard](images/prometheus.png)
+![Prometheus Targets](images/prometheus_targets.png)
 
 ### 9.2 Grafana Installation and Setup
 
@@ -309,7 +308,8 @@ Visit the [Grafana download page](https://grafana.com/get) and download the late
    ```bash
    ./bin/grafana-server
    ```
-![Alt text](images/grafana.png)
+
+![Grafana Dashboard](images/grafana.png)
 
 #### 9.2.3 Access Grafana
 Open a web browser and navigate to `http://localhost:3000` to access the Grafana dashboard.
@@ -319,9 +319,107 @@ Open a web browser and navigate to `http://localhost:3000` to access the Grafana
 2. Add Prometheus as a data source.
 3. Configure the Prometheus HTTP URL (`http://localhost:9090` by default).
 
-![Alt text](images/grafanadashboard.png)
+## 8. Terraform for AKS Deployment
 
-## 10. Conclusion
+### 8.1 Install Terraform
+Follow the [official Terraform installation guide](https://learn.hashicorp.com/tutorials/terraform/install-cli) to install Terraform.
 
-### 10.1 Summary
-This document has provided a step-by-step guide for setting up a comprehensive CI/CD pipeline using Jenkins, Git, Docker, SonarQube, Trivy, and Dependency Check. Additionally, it extended the pipeline with Prometheus and Grafana integration for enhanced monitoring capabilities, contributing to efficient and reliable software development practices.
+### 8.2 AKS Cluster Provisioning
+1. **Create a Terraform configuration file (e.g., `aks.tf`) to define AKS infrastructure.**
+   ```bash
+   resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+  }
+
+  resource "azurerm_kubernetes_cluster" "k8s" {
+  name                = var.cluster_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  dns_prefix          = var.dns_prefix
+  kubernetes_version  = var.kubernetes_version
+
+  default_node_pool {
+    name       = "systempool"
+    node_count = var.node_count
+    vm_size    = "Standard_D2s_v4"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  network_profile {
+    network_plugin = "kubenet"
+    network_policy = "calico"
+  }
+  }
+  ```
+2. **Run Terraform commands to initialize and apply the configuration.**
+   ```bash
+   terraform init
+   terraform apply
+   ```
+  ![Terraform Init](images/terraform_init.png)
+  ![Terraform AKS Create](images/terraform_aks_create.png)
+  ![Terraform Output](images/terraform_output.png)
+
+## 9. Azure CLI Authentication for Terraform
+
+### 9.1 Install Azure CLI
+Follow the [Azure CLI installation guide](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
+
+### 9.2 Authenticate to Azure
+1. **Open a terminal and run the following command to log in to your Azure account.**
+   ```bash
+   az login
+   ```
+2. **Follow the on-screen instructions to complete the authentication process.
+
+## 10. ArgoCD Installation and Setup
+
+### 10.1 Install ArgoCD
+1. **Follow the [ArgoCD installation guide](https://argoproj.github.io/argo-cd/getting_started/#1-install-argo-cd) to install ArgoCD on your cluster.**
+2. **Expose the ArgoCD API server externally if needed.**
+   ```bash
+   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+   ```
+
+![ArgoCD Installation](images/argo_installation.png)
+
+3. **Retrieve the ArgoCD server external IP and access the ArgoCD UI.**
+   ```bash
+   kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'
+   ```
+
+![ArgoCD Cluster](images/argo_cluster.png)
+
+![ArgoCD Namespace](images/argo_namespace.png)
+
+### 10.2 Retrieve ArgoCD Admin Password
+1. **Identify the ArgoCD server pod.**
+   ```bash
+   kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
+   ```
+2. **Retrieve the ArgoCD admin password using the identified pod.**
+   ```bash
+   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+   ```
+3. **Use the obtained password to log in to the ArgoCD UI.**
+
+### 10.3 Deploy Application with ArgoCD
+1. **Access the ArgoCD UI using the external IP obtained earlier.**
+2. **Log in with the default credentials (admin/<argocd-server-pod-name>).**
+3. **Add your Git repository as a new application source in the ArgoCD UI.**
+4. **Configure the application with the appropriate settings for your project.**
+5. **Deploy your application using ArgoCD.**
+ 
+  ![Alt text](images/argonetflix.png)
+
+  # Conclusion
+
+This guide outlines the creation of a comprehensive CI/CD pipeline with Jenkins, Git, Docker, SonarQube, Trivy, Dependency Check, Terraform for AKS, and ArgoCD. Automated processes cover building, testing, security scanning, AKS cluster provisioning, and application deployment.
+
+Prometheus and Grafana integration enhances monitoring, offering insights for efficient and confident software delivery. Terraform and ArgoCD support infrastructure as code practices, emphasizing security with tools like SonarQube, Dependency Check, and Trivy.
+
+Follow these steps to establish a DevSecOps pipeline, promoting continuous integration, continuous delivery, and robust security practices for a dependable software development lifecycle.
