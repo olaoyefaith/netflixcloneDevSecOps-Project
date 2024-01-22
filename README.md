@@ -43,12 +43,12 @@ Visit the [Jenkins download page](https://www.jenkins.io/download/) and download
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-  ![Jenkins Installation](images/jenkins_installation.png)
+  ![Jenkins Installation](images/jenkinsinsallation.png)
 
 ### 3.3 Access Jenkins
 Open a web browser and navigate to `http://localhost:8080` to access the Jenkins dashboard. Follow the on-screen instructions to unlock Jenkins.
 
-  ![Configure Credentials](images/configure_credentials.png)
+  ![Configure Credentials](images/configure%20credentials.png)
 
 ## 4. Git Installation
 
@@ -60,21 +60,21 @@ Visit the [Git download page](https://git-scm.com/downloads) and download the la
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-  ![Git Plugins](images/git_plugins.png)
+  ![Git Plugins](images/plugginss.png)
 
 ## 5. Docker Installation
 
 ### 5.1 Download Docker
 Visit the [Docker download page](https://www.docker.com/get-started) and download the latest version for your platform.
 
- ![Docker Plugins](images/docker_plugins.png)
+ ![Docker Plugins](images/dockerpluggins.png)
 
 ### 5.2 Installation Steps
 1. **Run** the Docker installer.
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
- ![Docker Jenkins Integration](images/docker_jenkins_integration.png)
+ ![Docker Jenkins Integration](images/docckerjenkins.png)
 
 ## 6. SonarQube Installation
 
@@ -86,7 +86,7 @@ Visit the [SonarQube download page](https://www.sonarqube.org/downloads/) and do
 2. **Follow** the installation wizard instructions.
 3. **Complete** the installation.
 
-![SonarQube Scanner](images/sonar_scanner.png)
+![SonarQube Scanner](images/sonarscanner.png)
 
 ### 6.3 Start SonarQube
 Run SonarQube using Docker:
@@ -99,14 +99,14 @@ docker run -d --name sonarqube -p 9000:9000 sonarqube
 
 Access SonarQube at `http://localhost:9000` and use default credentials (admin/admin).
 
-![SonarQube Dashboard](images/sonarqube_2.png)
+![SonarQube Dashboard](images/sonarQube%20(2).png)
 
 ## 7. Dependency Check Installation
 
 ### 7.1 Download Dependency Check
 Visit the [Dependency-Check GitHub releases page](https://github.com/jeremylong/DependencyCheck/releases) and download the latest version.
 
-  ![Dependency Check](images/dependency_check.png)
+  ![Dependency Check](images/dependencycheck.png)
 
 ### 7.2 Installation Steps
 1. **Extract** the Dependency Check archive.
@@ -204,16 +204,16 @@ latest > trivyimage.txt"
 2. **Configure** the pipeline to fetch source code from the Git repository.
 3. **Define** pipeline stages (Build, Test, SonarQube Analysis, Docker Build, etc.).
 
-  ![Jenkins Success](images/jenkins_success.png)
+  ![Jenkins Success](images/jenkinssucces.png)
 
 ### 8.3 Run the Pipeline
 - **Trigger** the pipeline manually or configure webhooks for automatic triggering on code commits.
 
-  ![Build and Success](images/build_and_success.png)
+  ![Build and Success](images/buildandsuccess.png)
 
   ![DockerHub](images/dockerhub.png)
   
-  ![Netflix Success](images/netflix_success.png)
+  ![Netflix Success](images/netflixsuccess.png)
 
 ## 9. Prometheus and Grafana Integration
 
@@ -296,10 +296,10 @@ sudo systemctl status prometheus
 #### 9.1.3 Access Prometheus
 Open a web browser and navigate to `http://localhost:9090` to access the Prometheus dashboard.
 
-  ![Prometheus Dashboard](images/prometheus.png)
+  ![Prometheus Dashboard](images/promethues.png)
   
   
-  ![Prometheus Targets](images/prometheus_targets.png)
+  ![Prometheus Targets](images/promethuestarget.png)
 
 ### 9.2 Grafana Installation and Setup
 
@@ -364,11 +364,11 @@ Follow the [official Terraform installation guide](https://learn.hashicorp.com/t
    terraform init
    terraform apply
    ```
-  ![Terraform Init](images/terraform_init.png)
+  ![Terraform Init](images/terraforminit.png)
 
-  ![Terraform AKS Create](images/terraform_aks_create.png)
+  ![Terraform AKS Create](images/terraformakscreate.png)
 
-  ![Terraform Output](images/terraform_output.png)
+  ![Terraform Output](images/terraformoutput.png)
 
 ## 9. Azure CLI Authentication for Terraform
 
@@ -391,16 +391,16 @@ Follow the [Azure CLI installation guide](https://docs.microsoft.com/en-us/cli/a
    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
    ```
 
-  ![ArgoCD Installation](images/argo_installation.png)
+  ![ArgoCD Installation](images/argoinstallation.png)
 
 3. **Retrieve the ArgoCD server external IP and access the ArgoCD UI.**
    ```bash
    kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'
    ```
 
-  ![ArgoCD Cluster](images/argo_cluster.png)
+  ![ArgoCD Cluster](images/argocluster.png)
 
-  ![ArgoCD Namespace](images/argo_namespace.png)
+  ![ArgoCD Namespace](images/argonamespace.png)
 
 ### 10.2 Retrieve ArgoCD Admin Password
 1. **Identify the ArgoCD server pod.**
